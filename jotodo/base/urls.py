@@ -2,7 +2,6 @@ from django.urls import path
 from .views import TaskList, TaskDetail, TaskCreate, TaskUpdate, DeleteTask, CustomLoginView, RegisterPage
 from django.contrib.auth.views import LogoutView
 
-from . import page_links
 
 # as_view()
 urlpatterns = [

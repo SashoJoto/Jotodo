@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django import forms
-from datetime import datetime, timedelta
 
 
 class Task(models.Model):
@@ -10,7 +9,7 @@ class Task(models.Model):
     description = models.TextField(null=True, blank=True)
     complete = models.BooleanField(default=False)
     important = models.BooleanField(default=False)
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateField(auto_now_add=True)
     due_date = models.DateField(blank=True, null=True)
 
     def __str__(self):

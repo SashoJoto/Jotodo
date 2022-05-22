@@ -50,7 +50,7 @@
                          style="fill: rgba(115, 134, 212, 1);transform: ;msFilter:;">
                         <path d="M4 6h2v2H4zm0 5h2v2H4zm0 5h2v2H4zm16-8V6H8.023v2H18.8zM8 11h12v2H8zm0 5h12v2H8z"></path>
                     </svg>
-                    <span class="link-text" id="active-page">To-do list</span>
+                    <span class="link-text">To-do list</span>
                 </a>
             </li>
         </ul>
@@ -102,27 +102,10 @@
                             <span style="margin-left: 1rem"> {{ task.title }} </span>
                         </div>
                     {% endif %}
-                {% empty %}
+                    {% empty %}
                     <h3>No tasks</h3>
                 {% endfor %}
-                <!-- Complete task svg -->
-                {% comment %}<div class="task-div" id="popup-btn">
-            <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                 style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
-                <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
-            </svg>
-            <span style="margin-left: 1rem; text-decoration: line-through"> Go to jim </span>
-        </div>{% endcomment %}
-                <a href="{% url 'task-create' %}" style="text-decoration: none">
-                    <div class="task-div">
-                        <svg class="top-link-svg svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                             style="fill: rgba(255,255,255,1);transform: ;msFilter:;">
-                            <path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path>
-                        </svg>
-                        <span style="margin-left: 1rem"> New task </span>
-                    </div>
-                </a>
-        </div>
+            </div>
         </div>
         <div id="todo_list">
             <div class="top-content">
@@ -198,23 +181,27 @@
                             {% else %}
                                 <p>No due date</p>
                             {% endif %}
+                            <hr>
+                            <p>Task created: {{ task.created }}</p>
+                            <hr>
                             <a class="task-details-btns" href="{% url 'task-update' task.id %}"
                                style="text-decoration: none; color: var(--text-primary); border: 1px solid var(--text-primary)">Edit</a>
                             <a class="task-details-btns" href="{% url 'task-delete' task.id %}"
                                style="text-decoration: none; color: var(--text-primary); border: 1px solid var(--text-primary)">Delete</a>
                         </div>
                     </div>
-                {% empty %}
+                    {% empty %}
                     <h3>No tasks</h3>
                 {% endfor %}
                 <!-- Complete task svg -->
-                {% comment %}<div class="task-div" id="popup-btn">
-            <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                 style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
-                <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
-            </svg>
-            <span style="margin-left: 1rem; text-decoration: line-through"> Go to jim </span>
-        </div>{% endcomment %}
+                {% comment %}
+                    <div class="task-div" id="popup-btn">
+                        <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
+                            <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
+                        </svg>
+                        <span style="margin-left: 1rem; text-decoration: line-through"> Go to jim </span>
+                    </div>{% endcomment %}
                 <a href="{% url 'task-create' %}" style="text-decoration: none">
                     <div class="task-div">
                         <svg class="top-link-svg svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -235,11 +222,19 @@
                     {% if task.important %}
                         <div class="task-div div-important">
                             <div class="important-container">
-                                <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                     style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
-                                    <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
-                                </svg>
-                                <span style="margin-left: 1rem; text-decoration: line-through"> {{ task.title }} </span>
+                                {% if task.complete %}
+                                    <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
+                                        <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
+                                    </svg>
+                                    <span style="margin-left: 1rem; text-decoration: line-through"> {{ task.title }} </span>
+                                {% else %}
+                                    <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
+                                        <path d="M12 2C6.486 2 2 6.486 2 12c.001 5.515 4.487 10.001 10 10.001 5.514 0 10-4.486 10.001-10.001 0-5.514-4.486-10-10.001-10zm0 18.001c-4.41 0-7.999-3.589-8-8.001 0-4.411 3.589-8 8-8 4.412 0 8.001 3.589 8.001 8-.001 4.412-3.59 8.001-8.001 8.001z"></path>
+                                    </svg>
+                                    <span style="margin-left: 1rem"> {{ task.title }} </span>
+                                {% endif %}
                             </div>
                             <div class="important-icon">
                                 <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -247,11 +242,10 @@
                                     <path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path>
                                 </svg>
                             </div>
-
                         </div>
-                    {% endif %}
 
-                {% empty %}
+                    {% endif %}
+                    {% empty %}
                     <h3>No tasks</h3>
                 {% endfor %}
             </div>
