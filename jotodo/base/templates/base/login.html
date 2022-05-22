@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<body class="">
+<div class="login-content">
+    <div class="brand-name">
+        <h1>Jotodo</h1>
+    </div>
+    <div class="login-block">
+        <h1>Login</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input id="login-btn" type="submit" value="Login">
+        </form>
+        <hr>
+        <p>Don't have an account? <a id="register-link" href="{% url 'register' %}">Register</a></p>
+    </div>
+</div>
+</body>
+{% endblock content %}

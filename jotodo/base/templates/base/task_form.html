@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+{% block content %}
+    <body class="">
+    <h1 class="link-text">Task form</h1>
+    <a href="{% url 'tasks' %}" class="go-back-btn">&lt Go back</a>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+    </body>
+    <script>
+        document.getElementById("id_due_date").placeholder = "YYYY-MM-DD";
+    </script>
+{% endblock content %}
