@@ -182,8 +182,6 @@
                                 <p>No due date</p>
                             {% endif %}
                             <hr>
-                            <p>Task created: {{ task.created }}</p>
-                            <hr>
                             <a class="task-details-btns" href="{% url 'task-update' task.id %}"
                                style="text-decoration: none; color: var(--text-primary); border: 1px solid var(--text-primary)">Edit</a>
                             <a class="task-details-btns" href="{% url 'task-delete' task.id %}"
