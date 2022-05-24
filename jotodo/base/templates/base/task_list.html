@@ -18,12 +18,12 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#my_day" class="nav-link">
+                <a href="#overdue" class="nav-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                          style="fill: rgba(236, 151, 54, 1);transform: ;msFilter:;">
                         <path d="M6.993 12c0 2.761 2.246 5.007 5.007 5.007s5.007-2.246 5.007-5.007S14.761 6.993 12 6.993 6.993 9.239 6.993 12zM12 8.993c1.658 0 3.007 1.349 3.007 3.007S13.658 15.007 12 15.007 8.993 13.658 8.993 12 10.342 8.993 12 8.993zM10.998 19h2v3h-2zm0-17h2v3h-2zm-9 9h3v2h-3zm17 0h3v2h-3zM4.219 18.363l2.12-2.122 1.415 1.414-2.12 2.122zM16.24 6.344l2.122-2.122 1.414 1.414-2.122 2.122zM6.342 7.759 4.22 5.637l1.415-1.414 2.12 2.122zm13.434 10.605-1.414 1.414-2.122-2.122 1.414-1.414z"></path>
                     </svg>
-                    <span class="link-text">My day</span>
+                    <span class="link-text">Overdue</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -57,14 +57,15 @@
     </nav>
 
     <main>
-        <div id="my_day">
+        {% if tasks|length == 0 %}
             <div class="top-content">
-                <h1>My day</h1>
+                <h1>No tasks</h1>
                 <ul class="top-nav">
                     <li class="top-item" id="themeButton">
                         <a href="#" class="top-link theme-changer">
                             <span class="top-link-text">Theme</span>
-                            <svg id="theme-btn" class="top-link-svg svgs" xmlns="http://www.w3.org/2000/svg" width="24"
+                            <svg id="theme-btn" class="top-link-svg svgs" xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
                                  height="24"
                                  style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
                                 <path d="M12 11.807A9.002 9.002 0 0 1 10.049 2a9.942 9.942 0 0 0-5.12 2.735c-3.905 3.905-3.905 10.237 0 14.142 3.906 3.906 10.237 3.905 14.143 0a9.946 9.946 0 0 0 2.735-5.119A9.003 9.003 0 0 1 12 11.807z"></path>
@@ -72,7 +73,7 @@
                         </a>
                     </li>
                     <li class="top-item">
-                        <a href="{% url 'login' %}" class="top-link">
+                        <a href="{% url 'logout' %}" class="top-link">
                             <span class="top-link-text">Logout</span>
                             <svg class="top-link-svg svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                  style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
@@ -83,123 +84,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="tasks" style="overflow: auto">
-                {% for task in tasks %}
-                    {% if task.complete %}
-                        <div class="task-div">
-                            <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                 style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
-                                <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
-                            </svg>
-                            <span style="margin-left: 1rem; text-decoration: line-through"> {{ task.title }} </span>
-                        </div>
-                    {% else %}
-                        <div class="task-div">
-                            <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                 style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
-                                <path d="M12 2C6.486 2 2 6.486 2 12c.001 5.515 4.487 10.001 10 10.001 5.514 0 10-4.486 10.001-10.001 0-5.514-4.486-10-10.001-10zm0 18.001c-4.41 0-7.999-3.589-8-8.001 0-4.411 3.589-8 8-8 4.412 0 8.001 3.589 8.001 8-.001 4.412-3.59 8.001-8.001 8.001z"></path>
-                            </svg>
-                            <span style="margin-left: 1rem"> {{ task.title }} </span>
-                        </div>
-                    {% endif %}
-                    {% empty %}
-                    <h3>No tasks</h3>
-                {% endfor %}
-            </div>
-        </div>
-        <div id="todo_list">
-            <div class="top-content">
-                <h1>Task list</h1>
-            </div>
-            <div class="tasks" style="overflow: auto">
-                <!-- Incomplete task svg -->
-                <form action="" method="GET">
-                    <div class="task-div tasks-first">
-                        <button type="submit" value="Search" style="padding: 0">
-                            <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                 style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
-                                <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path>
-                                <path d="M11.412 8.586c.379.38.588.882.588 1.414h2a3.977 3.977 0 0 0-1.174-2.828c-1.514-1.512-4.139-1.512-5.652 0l1.412 1.416c.76-.758 2.07-.756 2.826-.002z"></path>
-                            </svg>
-                        </button>
-                        <input style="margin-left: 1rem; padding: 0; outline: none" type="text" name="search-area"
-                               placeholder="Search" value="{{ search_input }}">
-                    </div>
-                </form>
-                {% for task in tasks %}
-                    {% if task.complete %}
-                        <div class="task-div task-list-divs">
-                            <svg class="svgs svgs-btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                 style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
-                                <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
-                            </svg>
-                            <span style="margin-left: 1rem; text-decoration: line-through"> {{ task.title }} </span>
-                        </div>
-                    {% else %}
-                        <div class="task-div task-list-divs">
-                            <svg class="svgs svgs-btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                 style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
-                                <path d="M12 2C6.486 2 2 6.486 2 12c.001 5.515 4.487 10.001 10 10.001 5.514 0 10-4.486 10.001-10.001 0-5.514-4.486-10-10.001-10zm0 18.001c-4.41 0-7.999-3.589-8-8.001 0-4.411 3.589-8 8-8 4.412 0 8.001 3.589 8.001 8-.001 4.412-3.59 8.001-8.001 8.001z"></path>
-                            </svg>
-                            <span style="margin-left: 1rem"> {{ task.title }} </span>
-                        </div>
-                    {% endif %}
-                    <div class="task-details">
-                        <div class="task-details-header">
-                            <h1>Task details</h1>
-                            <button class="close-btn">&times</button>
-                        </div>
-                        <div class="task-details-body">
-                            <p>Title: {{ task.title }}</p>
-                            <hr>
-                            {% if task.description %}
-                                <p>Description: {{ task.description }}</p>
-                            {% else %}
-                                <p>No description</p>
-                            {% endif %}
-                            <hr>
-                            {% if task.important %}
-                                <div class="important-container">
-                                    <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                         style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
-                                        <path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path>
-                                    </svg>
-                                    <p style="margin-left: 1rem">Important</p>
-                                </div>
-
-                            {% else %}
-                                <div class="important-container">
-                                    <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                         style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
-                                        <path d="m6.516 14.323-1.49 6.452a.998.998 0 0 0 1.529 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082a1 1 0 0 0-.59-1.74l-5.701-.454-2.467-5.461a.998.998 0 0 0-1.822 0L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.214 4.107zm2.853-4.326a.998.998 0 0 0 .832-.586L12 5.43l1.799 3.981a.998.998 0 0 0 .832.586l3.972.315-3.271 2.944c-.284.256-.397.65-.293 1.018l1.253 4.385-3.736-2.491a.995.995 0 0 0-1.109 0l-3.904 2.603 1.05-4.546a1 1 0 0 0-.276-.94l-3.038-2.962 4.09-.326z"></path>
-                                    </svg>
-                                    <p style="margin-left: 1rem">Not important</p>
-                                </div>
-                            {% endif %}
-                            {% if task.due_date %}
-                                <p>Task due: {{ task.due_date }}</p>
-                            {% else %}
-                                <p>No due date</p>
-                            {% endif %}
-                            <hr>
-                            <a class="task-details-btns" href="{% url 'task-update' task.id %}"
-                               style="text-decoration: none; color: var(--text-primary); border: 1px solid var(--text-primary)">Edit</a>
-                            <a class="task-details-btns" href="{% url 'task-delete' task.id %}"
-                               style="text-decoration: none; color: var(--text-primary); border: 1px solid var(--text-primary)">Delete</a>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <h3>No tasks</h3>
-                {% endfor %}
-                <!-- Complete task svg -->
-                {% comment %}
-                    <div class="task-div" id="popup-btn">
-                        <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                             style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
-                            <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
-                        </svg>
-                        <span style="margin-left: 1rem; text-decoration: line-through"> Go to jim </span>
-                    </div>{% endcomment %}
+            <div class="tasks">
                 <a href="{% url 'task-create' %}" style="text-decoration: none">
                     <div class="task-div">
                         <svg class="top-link-svg svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -210,44 +95,196 @@
                     </div>
                 </a>
             </div>
-        </div>
-        <div id="important">
-            <div class="top-content">
-                <h1>Important</h1>
-            </div>
-            <div class="tasks" style="overflow: auto">
-                {% for task in tasks %}
-                    {% if task.important %}
-                        <div class="task-div div-important">
-                            <div class="important-container">
-                                {% if task.complete %}
+        {% else %}
+            <div id="overdue">
+                <div class="top-content">
+                    <h1>Overdue</h1>
+                    <ul class="top-nav">
+                        <li class="top-item" id="themeButton">
+                            <a href="#" class="top-link theme-changer">
+                                <span class="top-link-text">Theme</span>
+                                <svg id="theme-btn" class="top-link-svg svgs" xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24"
+                                     style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
+                                    <path d="M12 11.807A9.002 9.002 0 0 1 10.049 2a9.942 9.942 0 0 0-5.12 2.735c-3.905 3.905-3.905 10.237 0 14.142 3.906 3.906 10.237 3.905 14.143 0a9.946 9.946 0 0 0 2.735-5.119A9.003 9.003 0 0 1 12 11.807z"></path>
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="top-item">
+                            <a href="{% url 'logout' %}" class="top-link">
+                                <span class="top-link-text">Logout</span>
+                                <svg class="top-link-svg svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                     style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
+                                    <path d="M16 13v-2H7V8l-5 4 5 4v-3z"></path>
+                                    <path d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z"></path>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tasks" style="overflow: auto">
+                    {% for task in tasks %}
+                        {% if task.due_date < task.today %}
+                            {% if task.complete %}
+                                <div class="task-div">
                                     <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                          style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
                                         <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
                                     </svg>
                                     <span style="margin-left: 1rem; text-decoration: line-through"> {{ task.title }} </span>
-                                {% else %}
+                                </div>
+                            {% else %}
+                                <div class="task-div">
                                     <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                          style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
                                         <path d="M12 2C6.486 2 2 6.486 2 12c.001 5.515 4.487 10.001 10 10.001 5.514 0 10-4.486 10.001-10.001 0-5.514-4.486-10-10.001-10zm0 18.001c-4.41 0-7.999-3.589-8-8.001 0-4.411 3.589-8 8-8 4.412 0 8.001 3.589 8.001 8-.001 4.412-3.59 8.001-8.001 8.001z"></path>
                                     </svg>
                                     <span style="margin-left: 1rem"> {{ task.title }} </span>
-                                {% endif %}
-                            </div>
-                            <div class="important-icon">
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div id="todo_list">
+                <div class="top-content">
+                    <h1>Task list</h1>
+                </div>
+                <div class="tasks" style="overflow: auto">
+                    <!-- Incomplete task svg -->
+                    <form action="" method="GET">
+                        <div class="task-div tasks-first">
+                            <button type="submit" value="Search" style="padding: 0">
                                 <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                     style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:; margin-right: 1rem">
-                                    <path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path>
+                                     style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
+                                    <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path>
+                                    <path d="M11.412 8.586c.379.38.588.882.588 1.414h2a3.977 3.977 0 0 0-1.174-2.828c-1.514-1.512-4.139-1.512-5.652 0l1.412 1.416c.76-.758 2.07-.756 2.826-.002z"></path>
                                 </svg>
+                            </button>
+                            <input style="margin-left: 1rem; padding: 0; outline: none" type="text" name="search-area"
+                                   placeholder="Search" value="{{ search_input }}">
+                        </div>
+                    </form>
+                    {% for task in tasks %}
+                        {% if task.complete %}
+                            <div class="task-div task-list-divs">
+                                <svg class="svgs svgs-btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                     style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
+                                    <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
+                                </svg>
+                                <span style="margin-left: 1rem; text-decoration: line-through"> {{ task.title }} </span>
+                            </div>
+                        {% else %}
+                            <div class="task-div task-list-divs">
+                                <svg class="svgs svgs-btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                     style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
+                                    <path d="M12 2C6.486 2 2 6.486 2 12c.001 5.515 4.487 10.001 10 10.001 5.514 0 10-4.486 10.001-10.001 0-5.514-4.486-10-10.001-10zm0 18.001c-4.41 0-7.999-3.589-8-8.001 0-4.411 3.589-8 8-8 4.412 0 8.001 3.589 8.001 8-.001 4.412-3.59 8.001-8.001 8.001z"></path>
+                                </svg>
+                                <span style="margin-left: 1rem"> {{ task.title }} </span>
+                            </div>
+                        {% endif %}
+                        <div class="task-details">
+                            <div class="task-details-header">
+                                <h1>Task details</h1>
+                                <button class="close-btn">&times</button>
+                            </div>
+                            <div class="task-details-body">
+                                <p>Title: {{ task.title }}</p>
+                                <hr>
+                                {% if task.description %}
+                                    <p>Description: {{ task.description }}</p>
+                                {% else %}
+                                    <p>No description</p>
+                                {% endif %}
+                                <hr>
+                                {% if task.important %}
+                                    <div class="important-container">
+                                        <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
+                                            <path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path>
+                                        </svg>
+                                        <p style="margin-left: 1rem">Important</p>
+                                    </div>
+
+                                {% else %}
+                                    <div class="important-container">
+                                        <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
+                                            <path d="m6.516 14.323-1.49 6.452a.998.998 0 0 0 1.529 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082a1 1 0 0 0-.59-1.74l-5.701-.454-2.467-5.461a.998.998 0 0 0-1.822 0L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.214 4.107zm2.853-4.326a.998.998 0 0 0 .832-.586L12 5.43l1.799 3.981a.998.998 0 0 0 .832.586l3.972.315-3.271 2.944c-.284.256-.397.65-.293 1.018l1.253 4.385-3.736-2.491a.995.995 0 0 0-1.109 0l-3.904 2.603 1.05-4.546a1 1 0 0 0-.276-.94l-3.038-2.962 4.09-.326z"></path>
+                                        </svg>
+                                        <p style="margin-left: 1rem">Not important</p>
+                                    </div>
+                                {% endif %}
+                                {% if task.due_date %}
+                                    <p>Task due: {{ task.due_date }}</p>
+                                {% else %}
+                                    <p>No due date</p>
+                                {% endif %}
+                                <hr>
+                                <a class="task-details-btns" href="{% url 'task-update' task.id %}"
+                                   style="text-decoration: none; color: var(--text-primary); border: 1px solid var(--text-primary)">Edit</a>
+                                <a class="task-details-btns" href="{% url 'task-delete' task.id %}"
+                                   style="text-decoration: none; color: var(--text-primary); border: 1px solid var(--text-primary)">Delete</a>
                             </div>
                         </div>
-
-                    {% endif %}
-                    {% empty %}
-                    <h3>No tasks</h3>
-                {% endfor %}
+                    {% endfor %}
+                    <!-- Complete task svg -->
+                    {% comment %}
+                    <div class="task-div" id="popup-btn">
+                        <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
+                            <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
+                        </svg>
+                        <span style="margin-left: 1rem; text-decoration: line-through"> Go to jim </span>
+                    </div>{% endcomment %}
+                    <a href="{% url 'task-create' %}" style="text-decoration: none">
+                        <div class="task-div">
+                            <svg class="top-link-svg svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                 style="fill: rgba(255,255,255,1);transform: ;msFilter:;">
+                                <path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path>
+                            </svg>
+                            <span style="margin-left: 1rem"> New task </span>
+                        </div>
+                    </a>
+                </div>
             </div>
-        </div>
+            <div id="important">
+                <div class="top-content">
+                    <h1>Important</h1>
+                </div>
+                <div class="tasks" style="overflow: auto">
+                    {% for task in tasks %}
+                        {% if task.important %}
+                            <div class="task-div div-important">
+                                <div class="important-container">
+                                    {% if task.complete %}
+                                        <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
+                                            <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
+                                        </svg>
+                                        <span style="margin-left: 1rem; text-decoration: line-through"> {{ task.title }} </span>
+                                    {% else %}
+                                        <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;">
+                                            <path d="M12 2C6.486 2 2 6.486 2 12c.001 5.515 4.487 10.001 10 10.001 5.514 0 10-4.486 10.001-10.001 0-5.514-4.486-10-10.001-10zm0 18.001c-4.41 0-7.999-3.589-8-8.001 0-4.411 3.589-8 8-8 4.412 0 8.001 3.589 8.001 8-.001 4.412-3.59 8.001-8.001 8.001z"></path>
+                                        </svg>
+                                        <span style="margin-left: 1rem"> {{ task.title }} </span>
+                                    {% endif %}
+                                </div>
+                                <div class="important-icon">
+                                    <svg class="svgs" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:; margin-right: 1rem">
+                                        <path d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
     </main>
     <script src="/static/js/script.js"></script>
     </body>

@@ -198,6 +198,16 @@ main {
     align-items: center;
 }
 
+.register-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.register-content-divs {
+    margin: .25rem .5rem;
+}
+
 .important-container {
     display: flex;
     flex-direction: row;

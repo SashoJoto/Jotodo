@@ -46,8 +46,8 @@ let tasks = document.querySelectorAll('.task-list-divs');
 let tasksDetail = document.querySelectorAll('.task-details');
 tasks.forEach((task, index) => {
    task.addEventListener('click', () => {
-       tasksDetail[index].style.opacity = "1";
-       tasksDetail[index].style.pointerEvents = "auto";
+       tasksDetail[index - 1].style.opacity = "1";
+       tasksDetail[index - 1].style.pointerEvents = "auto";
    })
 });
 

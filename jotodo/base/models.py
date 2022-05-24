@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django import forms
+import datetime
 
 
 class Task(models.Model):
@@ -9,12 +9,16 @@ class Task(models.Model):
     description = models.TextField(null=True, blank=True)
     complete = models.BooleanField(default=False)
     important = models.BooleanField(default=False)
-    created = models.DateField(auto_now_add=True)
+    today = datetime.date.today()
     due_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return self.title
 
+    def is_past_due(self):
+        print(self.due_date)
+        print(datetime.date.today())
+
     class Meta:
-        # Sorts tasks by complete - sends complete tasks to th
+        # Sorts tasks by complete - sends complete tasks to the bottom of list
         ordering = ['complete', '-important']

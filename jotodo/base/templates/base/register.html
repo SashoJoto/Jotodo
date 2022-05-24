@@ -10,13 +10,25 @@
             <h1>Register</h1>
             <form method="POST">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <input id="login-btn" type="submit" value="Register">
+                <div class="register-content">
+                    <div class="register-content-divs">
+                        <label>{{ form.username.label }}</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="register-content-divs">
+                        <label>{{ form.password1.label }}</label>
+                        {{ form.password1 }}
+                    </div>
+                    <div class="register-content-divs">
+                        <label>{{ form.password2.label }}</label>
+                        {{ form.password2 }}
+                    </div>
+                </div>
+                <input style="margin-top:10px ;" id="login-btn" type="submit" value="Register">
             </form>
-            <hr>
             <p>Already have an account? <a id="register-link" href="{% url 'login' %}">Login</a></p>
         </div>
     </div>
-    <script src="/static/js/script.js"></script>
+
     </body>
 {% endblock content %}
